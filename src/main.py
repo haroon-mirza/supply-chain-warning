@@ -10,14 +10,12 @@ SERIES_IDS = [
     "UNRATE",
     "INDPRO",
     "ISRATIO",
-    "HOUST",
-    "TSR"
+    "HOUST"
 ]
 
 
 # Main function to select data
 def main():
-    
     print("starting pipeline")
     
     all_dfs = []
@@ -29,22 +27,16 @@ def main():
             all_dfs.append(df)
             
         except Exception as e:
-            print(f"Failed to load {series}: {e}"
-            )
-    
-    combined_df = pd.concat(
-        all_dfs,
-        ignore_index=True
-    )
+            print(f"Failed to load {series}: {e}")
+            
+    bronze_df = pd.concat(all_dfs, ignore_index=True)
     
     load_dataframe(
-        combined_df,
-        "fred_data"
+        bronze_df,
+        "bronze_fred_observations"
     )
-    
-    print(
-        f"Loaded {len(combined_df)} rows"
-    )
+
+    print(f"Loaded {len(bronze_df)} bronze rows")
     
 if __name__ == "__main__":
     main()
